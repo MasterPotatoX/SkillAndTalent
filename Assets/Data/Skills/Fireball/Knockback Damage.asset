@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af18519729121f4e96ac0249e1ba1cd, type: 3}
+  m_Name: Knockback Damage
+  m_EditorClassIdentifier: 
+  _effectDuration: 0
+  _targetType: 2
+  _isAOE: 1
+  _aoeRange: 5
+  damageAmount: 3
+  damageType: 0
