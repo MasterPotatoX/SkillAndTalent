@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SkillManager : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class SkillManager : MonoBehaviour
     public GameObject skillUIPrefab;
     public Transform skillUIHolder;
     public Character[] friendlies, enemies;
+    public TextMeshProUGUI textSkillInfo;
 
     private void Start()
     {
         CreateSkills();
     }
 
+    //Display all skills on the UI
     private void CreateSkills()
     {
         for (int i = 0; i < skills.Length; i++)
@@ -27,9 +30,24 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+    private void UpdateSkillDetails(Skill skill)
+    {
+        textSkillInfo.text = $"Name: {skill.GetSkillName()} \nDescription: {skill.GetDescription()}\nEffects:";
+
+        SkillEffect[] effects = skill.GetSkillEffects();
+
+        for (int i = 0; i < effects.Length; i++)
+        {
+            textSkillInfo.text += $"{effects[i].GetDetails()}" + (i == effects.Length-1?"":", ");
+        }
+    }
+
+    //When a skill is selected from UI, get affected characters
     public void ExecuteSkill(Skill skill)
     {
         Debug.Log("Executing skill: " + skill.GetSkillName());
+
+        UpdateSkillDetails(skill);
 
         SkillEffect[] effects = skill.GetSkillEffects();
         List<Character> characterList = new List<Character>();
@@ -47,8 +65,8 @@ public class SkillManager : MonoBehaviour
                     case SkillEffect.TargetType.Self:
                         characterList.Add(friendlies[0]);
                         break;
-                    case SkillEffect.TargetType.Friendlies:
-                        for (int j = 1; j < friendlies.Length; j++)
+                    case SkillEffect.TargetType.Friendlies:  //friendlies includes player too
+                        for (int j = 0; j < friendlies.Length; j++)
                         {
                             if (friendlies[j].GetDistanceFromPlayer() <= effects[i].GetAOERange())
                                 characterList.Add(friendlies[j]);
@@ -71,6 +89,9 @@ public class SkillManager : MonoBehaviour
                     case SkillEffect.TargetType.Self:
                         characterList.Add(friendlies[0]);
                         break;
+                    case SkillEffect.TargetType.Friendlies:  //Assumption: Non aoe skills should only target self or enemies, this is fallback in case friendlies is selected
+                        characterList.Add(friendlies[0]);
+                        break;
                     case SkillEffect.TargetType.Enemies:
                         characterList.Add(enemies[0]);
                         break;
@@ -79,6 +100,7 @@ public class SkillManager : MonoBehaviour
 
             effects[i].SetCharacters(characterList);
             effects[i].ApplyEffect();
+            characterList.Clear(); //Clear list for next effect
         }
         
     }

@@ -9,6 +9,14 @@ public class StunEffect : SkillEffect
     public override void ApplyEffect()
     {
 
-        Debug.Log("Applying Stun effect");
+        foreach (Character character in target)
+        {
+            character.SetDescription($"Received {stunDuration} seconds stun.");
+        }
+    }
+
+    public override string GetDetails()
+    {
+        return $"{name} - {stunDuration} seconds stun";
     }
 }

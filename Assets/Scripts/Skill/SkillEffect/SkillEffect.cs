@@ -23,6 +23,11 @@ public class SkillEffect : ScriptableObject
         target = characters;
     }
 
+    public virtual string GetDetails()
+    {
+        return "Get Details Not Implemented";
+    }
+
     public float GetEffectDuration()
     {
         return _effectDuration;

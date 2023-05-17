@@ -13,7 +13,12 @@ public class ShieldBuff : SkillEffect
 
         foreach (Character character in target)
         {
-            character.SetDescription($"Received {shieldBuff} shield buff. Duration: {GetEffectDuration()}");
+            character.SetDescription($"Received {shieldBuff} shield buff. Duration: {GetEffectDuration()}s");
         }
+    }
+
+    public override string GetDetails()
+    {
+        return $"{name} - {shieldBuff} shield buff";
     }
 }

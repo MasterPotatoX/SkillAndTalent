@@ -21,9 +21,19 @@ public class Skill : ScriptableObject
         return _description; 
     }
 
+    public void ChangeManaCost(int manaCost)
+    {
+        _manaCost += manaCost;
+    }
+
     public int GetManaCost()
     {
         return _manaCost;
+    }
+
+    public void ChangeCooldownTime(float cooldownTime)
+    {
+        _cooldownTime += cooldownTime;
     }
 
     public float GetCooldownTime()

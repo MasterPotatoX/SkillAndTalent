@@ -11,7 +11,15 @@ public class HealEffect : SkillEffect
 
     public override void ApplyEffect()
     {
-    
-        Debug.Log("Applying Heal effect");
+
+        foreach (Character character in target)
+        {
+            character.SetDescription($"Received {healAmount} healing. Duration: {GetEffectDuration()}s");
+        }
+    }
+
+    public override string GetDetails()
+    {
+        return $"{name} - {healAmount} healing";
     }
 }

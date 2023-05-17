@@ -10,12 +10,17 @@ public class DamageEffect : SkillEffect
 
     public override void ApplyEffect()
     {
-        Debug.Log("damage to " + target);
+        Debug.Log("Target " + target.Count);
         foreach (Character character in target)
         {
-            character.SetDescription($"Received {damageAmount} {damageType} damage. Duration: {GetEffectDuration()}");
+            character.SetDescription($"Received {damageAmount} {damageType} damage. Duration: {GetEffectDuration()}s");
         }
         
     }
-    
+
+    public override string GetDetails()
+    {
+        return $"{name} - {damageAmount} {damageType} damage";
+    }
+
 }
