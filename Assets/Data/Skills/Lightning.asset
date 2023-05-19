@@ -36,14 +36,14 @@ MonoBehaviour:
     shieldDuration: 0
     stealthDuration: 0
     aoeRadius: 0
-  - effectType: 3
+  - effectType: 5
     damageAmount: 8
     healAmount: 0
     buffDuration: 0
     buffMultiplier: 0
     debuffDuration: 0
     debuffMultiplier: 0
-    stunDuration: 5
+    stunDuration: 3
     slowDuration: 0
     slowPercentage: 0
     silenceDuration: 0

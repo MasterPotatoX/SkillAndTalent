@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 156e2572fd68b4247a54ca0ee0c083a7, type: 3}
-  m_Name: New Talent 1
+  m_Name: Speechless
   m_EditorClassIdentifier: 
-  talentName: The Nameless One
+  talentName: The Speechless One
   talentDescription: Silence
   manaCostModificationType: 0
   manaCostModifier: 0
@@ -57,4 +57,4 @@ MonoBehaviour:
       stealthDurationModificationType: 0
       stealthDuration: 0
       aoeRadiusModificationType: 0
-      aoeRadius: 0
+      aoeRadius: 2

@@ -99,7 +99,7 @@ public class SkillManager : MonoBehaviour
         List<Talent> relatedTalents = new List<Talent>();
         relatedTalents = _talentManager.GetRelatedTalents(skill);
 
-        string strTalents = "\nAffected by talents:";
+        string strTalents = "\n\nAffected by talents:";
 
         foreach (var talent in relatedTalents)
         {

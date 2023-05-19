@@ -81,7 +81,7 @@ public class TalentManager : MonoBehaviour
             for (int i = 0; i < talent.skill.Count; i++)
             {
                 
-                sb += $"\n\nSkill Affected: {talent.skill[i].affectedSkill.skillName} {talent.skill[i].talentEffect.Count}";
+                sb += $"\n\nSkill Affected: {talent.skill[i].affectedSkill.skillName}";
 
                 for (int j = 0; j < talent.skill[i].talentEffect.Count; j++)
                 {
