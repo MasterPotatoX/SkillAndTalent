@@ -47,7 +47,7 @@ public class TalentEditor : Editor
             string skillName = affectedSkillProp.objectReferenceValue != null ? affectedSkillProp.objectReferenceValue.name : "None";
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Skill: " + skillName, EditorStyles.boldLabel); 
-            //EditorGUILayout.LabelField("Skill " + i.ToString()  , EditorStyles.boldLabel);
+            
 
             // Loop through talent effects
             for (int j = 0; j < talentEffectProp.arraySize; j++)
@@ -105,7 +105,7 @@ public class TalentEditor : Editor
                     case SkillEffectType.AoE:
                         DrawAoEFields(talentEffectElementProp);
                         break;
-                    // Add cases for other effect types
+                    
                     default:
                         EditorGUILayout.HelpBox("Unsupported effect type.", MessageType.Warning);
                         break;
@@ -118,7 +118,7 @@ public class TalentEditor : Editor
                 talentEffectProp.arraySize++;
                 SerializedProperty newTalentEffectProp = talentEffectProp.GetArrayElementAtIndex(talentEffectProp.arraySize - 1);
                 newTalentEffectProp.FindPropertyRelative("effectType").enumValueIndex = 0; // Set default effect type
-                //newTalentEffectProp.FindPropertyRelative("modificationType").enumValueIndex = 0; // Set default modification type
+                
             }
 
             EditorGUILayout.EndVertical();
