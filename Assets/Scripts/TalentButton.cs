@@ -28,7 +28,7 @@ public class TalentButton : MonoBehaviour
             isActive = false;
             imageBG.color = Color.gray;
             StatusGlobal.instance.UpdateStatus($"Talent: {_talent.talentName} de-activated.");
-            _manager.TalentActivated(_talent);
+            _manager.TalentDeActivated(_talent);
             
         }
         else
@@ -36,7 +36,7 @@ public class TalentButton : MonoBehaviour
             isActive= true;
             imageBG.color = Color.green;
             StatusGlobal.instance.UpdateStatus($"Talent: {_talent.talentName} activated.");
-            _manager.TalentDeActivated(_talent);
+            _manager.TalentActivated(_talent);
         }
     }
 

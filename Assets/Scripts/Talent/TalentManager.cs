@@ -32,13 +32,36 @@ public class TalentManager : MonoBehaviour
     {
         activeTalents.Add(talent);
         SetTalentDetails(talent);
-            
+        
     }
 
     public void TalentDeActivated(Talent talent)
     {
         activeTalents.Remove(talent);
         SetTalentDetails(talent);
+    }
+
+    public List<Talent> GetRelatedTalents(Skill skill)
+    {
+        Debug.Log("t" + activeTalents.Count);
+        List<Talent> relatedTalents = new List<Talent>();
+
+        foreach (var talent in activeTalents)
+        {
+            List<SkillTalent> activeSkill = new List<SkillTalent>();
+            activeSkill = talent.skill;
+            foreach (var aSkill in activeSkill)
+            {
+                Debug.Log(skill + " - " + aSkill.affectedSkill);
+                if(aSkill.affectedSkill == skill)
+                {
+                    relatedTalents.Add(talent);
+                }
+            }
+
+        }
+
+        return relatedTalents;
     }
 
     private void SetTalentDetails(Talent talent)
@@ -110,7 +133,7 @@ public class TalentManager : MonoBehaviour
                             break;
                     }
 
-                    //sb += $"\nEffect:{talent.skill[i].talentEffect[j].effectType}";
+                   
                 }
 
             }
