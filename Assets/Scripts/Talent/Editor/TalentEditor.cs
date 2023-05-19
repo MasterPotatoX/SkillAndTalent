@@ -52,6 +52,7 @@ public class TalentEditor : Editor
             // Loop through talent effects
             for (int j = 0; j < talentEffectProp.arraySize; j++)
             {
+                EditorGUILayout.Space();
                 SerializedProperty talentEffectElementProp = talentEffectProp.GetArrayElementAtIndex(j);
                 SerializedProperty effectTypeProp = talentEffectElementProp.FindPropertyRelative("effectType");
 
