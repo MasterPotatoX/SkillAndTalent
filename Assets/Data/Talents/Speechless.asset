@@ -21,7 +21,7 @@ MonoBehaviour:
   skill:
   - affectedSkill: {fileID: 11400000, guid: f1f101e788dd5db40a2b278bec967ff9, type: 2}
     talentEffect:
-    - effectType: 14
+    - effectType: 7
       damageModificationType: 0
       damageAmount: 0
       healModificationType: 0
@@ -40,8 +40,8 @@ MonoBehaviour:
       slowDuration: 0
       slowPercentageModificationType: 0
       slowPercentage: 0
-      silenceDurationModificationType: 0
-      silenceDuration: 0
+      silenceDurationModificationType: 1
+      silenceDuration: 3
       knockbackForceModificationType: 0
       knockbackForce: 0
       knockupForceModificationType: 0
@@ -57,4 +57,7 @@ MonoBehaviour:
       stealthDurationModificationType: 0
       stealthDuration: 0
       aoeRadiusModificationType: 0
-      aoeRadius: 2
+      aoeRadius: 0
+    talentVfxList:
+    - vfxName: Silenced FX
+      vfxPrefab: {fileID: 2644118671100421680, guid: 0ae9335d64af544449cced2006bf3275, type: 3}

@@ -11,50 +11,50 @@ public class SkillEffect
 
     // Damage
     [HideInInspector]
-    public int damageAmount;
+    public int damageAmount = 0;
 
     // Heal
-    [HideInInspector] public int healAmount;
+    [HideInInspector] public int healAmount = 0;
 
     // Buff
-    [HideInInspector] public float buffDuration;
-    [HideInInspector] public float buffMultiplier;
+    [HideInInspector] public float buffDuration = 0;
+    [HideInInspector] public float buffMultiplier = 0;
 
     // Debuff
-    [HideInInspector] public float debuffDuration;
-    [HideInInspector] public float debuffMultiplier;
+    [HideInInspector] public float debuffDuration = 0;
+    [HideInInspector] public float debuffMultiplier = 0;
 
     // Stun
-    [HideInInspector] public float stunDuration;
+    [HideInInspector] public float stunDuration = 0;
 
     // Slow
-    [HideInInspector] public float slowDuration;
-    [HideInInspector] public float slowPercentage;
+    [HideInInspector] public float slowDuration = 0;
+    [HideInInspector] public float slowPercentage = 0;
 
     // Silence
-    [HideInInspector] public float silenceDuration;
+    [HideInInspector] public float silenceDuration = 0;
 
     // Knockback
-    [HideInInspector] public float knockbackForce;
+    [HideInInspector] public float knockbackForce = 0;
 
     // Knockup
-    [HideInInspector] public float knockupForce;
+    [HideInInspector] public float knockupForce = 0;
 
     // Root
-    [HideInInspector] public float rootDuration;
+    [HideInInspector] public float rootDuration = 0;
 
     // Disarm
-    [HideInInspector] public float disarmDuration;
+    [HideInInspector] public float disarmDuration = 0;
 
     // Shield
-    [HideInInspector] public int shieldAmount;
-    [HideInInspector] public float shieldDuration;
+    [HideInInspector] public int shieldAmount = 0;
+    [HideInInspector] public float shieldDuration = 0;
 
     // Stealth
-    [HideInInspector] public float stealthDuration;
+    [HideInInspector] public float stealthDuration = 0;
 
     // AoE
-    [HideInInspector] public float aoeRadius;
+    [HideInInspector] public float aoeRadius = 0;
 
 }
 

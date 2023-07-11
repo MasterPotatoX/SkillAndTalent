@@ -80,4 +80,5 @@ public class SkillTalent
 {
     [SerializeField] public Skill affectedSkill;
     public List<TalentEffect> talentEffect;
+    public List<VFX> talentVfxList;
 }

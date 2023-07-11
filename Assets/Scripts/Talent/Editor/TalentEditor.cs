@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,6 +13,16 @@ public class TalentEditor : Editor
     private SerializedProperty cooldownTimeModifierProp;
     private SerializedProperty skillProp;
 
+    private GUIStyle deleteButtonStyle, addButtonStyle;
+    private Texture2D deleteTexture, addTexture;
+
+    private int skillToRemove = -1; //used to keep track of skill to remove
+    private int vfxToRemove = -1; //used to keep track of skill to remove
+    private int talentEffectToDelete = -1; //used to keep track of Talent Effect to delete
+    private SerializedProperty talentEffectListRef;
+    private SerializedProperty vfxListRef;
+    
+
     private void OnEnable()
     {
         talentNameProp = serializedObject.FindProperty("talentName");
@@ -21,11 +32,26 @@ public class TalentEditor : Editor
         cooldownTimeModificationTypeProp = serializedObject.FindProperty("cooldownTimeModificationType");
         cooldownTimeModifierProp = serializedObject.FindProperty("cooldownTimeModifier");
         skillProp = serializedObject.FindProperty("skill");
+
+        deleteTexture = MakeBackgroundTexture(1, 1, Color.red);
+        addTexture = MakeBackgroundTexture(1, 1, Color.green);
+
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
+        deleteButtonStyle = new GUIStyle();
+        deleteButtonStyle.normal.background = deleteTexture;
+        deleteButtonStyle.margin = new RectOffset(4, 4, 2, 2);
+        deleteButtonStyle.alignment = TextAnchor.MiddleCenter;
+
+        addButtonStyle = new GUIStyle();
+        addButtonStyle.normal.background = addTexture;
+        addButtonStyle.margin = new RectOffset(4, 4, 2, 2);
+        addButtonStyle.alignment = TextAnchor.MiddleCenter;
+        addButtonStyle.fontStyle = FontStyle.Bold;
 
         EditorGUILayout.PropertyField(talentNameProp);
         EditorGUILayout.PropertyField(talentDescriptionProp);
@@ -34,7 +60,7 @@ public class TalentEditor : Editor
         EditorGUILayout.PropertyField(cooldownTimeModificationTypeProp);
         EditorGUILayout.PropertyField(cooldownTimeModifierProp);
 
-        EditorGUILayout.PropertyField(skillProp, true);
+        //EditorGUILayout.PropertyField(skillProp, true);
 
         // Loop through skills
         for (int i = 0; i < skillProp.arraySize; i++)
@@ -43,15 +69,19 @@ public class TalentEditor : Editor
             SerializedProperty talentEffectProp = skillElementProp.FindPropertyRelative("talentEffect");
             SerializedProperty affectedSkillProp = skillElementProp.FindPropertyRelative("affectedSkill");
 
-            
+            SerializedProperty talentVFXProp = skillElementProp.FindPropertyRelative("talentVfxList");
+
             string skillName = affectedSkillProp.objectReferenceValue != null ? affectedSkillProp.objectReferenceValue.name : "None";
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.LabelField("Skill: " + skillName, EditorStyles.boldLabel); 
-            
+            EditorGUILayout.LabelField("Skill: " + skillName, EditorStyles.boldLabel);
+
+            EditorGUILayout.PropertyField(affectedSkillProp);
+            ShowDeleteSkillButton(i, skillName);
 
             // Loop through talent effects
             for (int j = 0; j < talentEffectProp.arraySize; j++)
             {
+                EditorGUILayout.BeginVertical(GUI.skin.box);
                 EditorGUILayout.Space();
                 SerializedProperty talentEffectElementProp = talentEffectProp.GetArrayElementAtIndex(j);
                 SerializedProperty effectTypeProp = talentEffectElementProp.FindPropertyRelative("effectType");
@@ -111,20 +141,143 @@ public class TalentEditor : Editor
                         break;
                 }
                 EditorGUI.indentLevel--;
-            }
-            
-            if (GUILayout.Button("Add Talent Effect"))
-            {
-                talentEffectProp.arraySize++;
-                SerializedProperty newTalentEffectProp = talentEffectProp.GetArrayElementAtIndex(talentEffectProp.arraySize - 1);
-                newTalentEffectProp.FindPropertyRelative("effectType").enumValueIndex = 0; // Set default effect type
-                
+                EditorGUILayout.Space();
+                ShowDeleteEffectButton(talentEffectProp, j, effectType.ToString());
+                EditorGUILayout.Space();
+                EditorGUILayout.EndVertical();
+
             }
 
+            if (!skillName.Equals("None"))
+            {
+                EditorGUILayout.BeginVertical(GUI.skin.box);
+                EditorGUILayout.Space();
+                ShowAddTalentButton(talentEffectProp);
+                EditorGUILayout.Space();
+                EditorGUILayout.EndVertical();
+            }
             EditorGUILayout.EndVertical();
+
+            //display vfx
+            for (int j = 0; j < talentVFXProp.arraySize; j++)
+            {
+                EditorGUILayout.LabelField("VFX:", EditorStyles.boldLabel);
+                EditorGUILayout.BeginVertical(GUI.skin.box);
+                EditorGUILayout.Space();
+                SerializedProperty talentVfxElementProp = talentVFXProp.GetArrayElementAtIndex(j);
+                SerializedProperty vfxNameProp = talentVfxElementProp.FindPropertyRelative("vfxName");
+                SerializedProperty vfxPrefabProp = talentVfxElementProp.FindPropertyRelative("vfxPrefab");
+                EditorGUILayout.PropertyField(vfxNameProp);
+                EditorGUILayout.PropertyField(vfxPrefabProp);
+                ShowDeleteVFXButton(talentVFXProp, j, vfxNameProp.stringValue);
+                EditorGUILayout.Space();
+                EditorGUILayout.EndVertical();
+            }
+
+            if (!skillName.Equals("None"))
+            {
+                EditorGUILayout.BeginVertical(GUI.skin.box);
+                EditorGUILayout.Space();
+                ShowAddVfxButton(talentVFXProp);
+                EditorGUILayout.Space();
+                EditorGUILayout.EndVertical();
+            }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+        }
+
+        EditorGUILayout.BeginVertical(GUI.skin.box);
+        EditorGUILayout.Space();
+        ShowAddSkillButton(skillProp);
+        EditorGUILayout.Space();
+        EditorGUILayout.EndVertical();
+
+        if (talentEffectToDelete != -1)
+        {
+            talentEffectListRef.DeleteArrayElementAtIndex(talentEffectToDelete);
+            talentEffectToDelete = -1;
+        }
+
+        if(skillToRemove != -1)
+        {
+            skillProp.DeleteArrayElementAtIndex(skillToRemove);
+            skillToRemove = -1;
+        }
+
+        if (vfxToRemove != -1)
+        {
+            vfxListRef.DeleteArrayElementAtIndex(vfxToRemove);
+            vfxToRemove = -1;
         }
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+
+    private void ShowDeleteEffectButton(SerializedProperty talentEffectProp, int index, string effectType)
+    {
+
+        if (GUILayout.Button("Remove " + effectType, deleteButtonStyle))
+        {
+            talentEffectListRef = talentEffectProp;
+            talentEffectToDelete = index;
+        }
+    }
+    private void ShowAddTalentButton(SerializedProperty list)
+    {
+        if (GUILayout.Button("Add Talent Effect", addButtonStyle))
+        {
+            list.arraySize++;
+            SerializedProperty newTalentEffectProp = list.GetArrayElementAtIndex(list.arraySize - 1);
+            newTalentEffectProp.FindPropertyRelative("effectType").enumValueIndex = 0; // Set default effect type
+
+        }
+    }
+
+    private void ShowAddVfxButton(SerializedProperty list)
+    {
+        if (GUILayout.Button("Add VFX", addButtonStyle))
+        {
+            list.arraySize++;
+            SerializedProperty newVfxProp = list.GetArrayElementAtIndex(list.arraySize - 1);
+            newVfxProp.FindPropertyRelative("vfxPrefab").objectReferenceValue = null; // Set default vfx to empty
+            newVfxProp.FindPropertyRelative("vfxName").stringValue = ""; // Set default vfx to empty
+        }
+    }
+
+    private void ShowDeleteVFXButton(SerializedProperty vfxProp, int index, string vfxName)
+    {
+        if (GUILayout.Button("Remove " + vfxName, deleteButtonStyle))
+        {
+            vfxToRemove = index;
+            vfxListRef = vfxProp;
+        }
+    }
+
+    private void ShowDeleteSkillButton(int index, string skillName)
+    {
+        if (GUILayout.Button("Remove " + skillName, deleteButtonStyle))
+        {
+            skillToRemove = index;
+        }
+    }
+
+    private void ShowAddSkillButton(SerializedProperty list)
+    {
+        if (GUILayout.Button("Add Skill", addButtonStyle))
+        {
+            list.arraySize++;
+            
+            SerializedProperty newSkillProp = list.GetArrayElementAtIndex(list.arraySize - 1);
+            newSkillProp.FindPropertyRelative("affectedSkill").objectReferenceValue = null; // Set default skill type
+            SerializedProperty talentEffectProp = newSkillProp.FindPropertyRelative("talentEffect"); //clear all talents by default
+            talentEffectProp.ClearArray();
+
+            SerializedProperty talentVFXProp = newSkillProp.FindPropertyRelative("talentVfxList"); //clear all vfx by default
+            talentVFXProp.ClearArray();
+        }
     }
 
     private void DrawDamageFields(SerializedProperty talentEffectProp)
@@ -268,6 +421,23 @@ public class TalentEditor : Editor
 
         EditorGUILayout.PropertyField(aoeRadiusPropM);
         EditorGUILayout.PropertyField(aoeRadiusProp);
+    }
+
+    private Texture2D MakeBackgroundTexture(int width, int height, Color color)
+    {
+        Color[] pixels = new Color[width * height];
+
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = color;
+        }
+
+        Texture2D backgroundTexture = new Texture2D(width, height);
+
+        backgroundTexture.SetPixels(pixels);
+        backgroundTexture.Apply();
+
+        return backgroundTexture;
     }
 
 }

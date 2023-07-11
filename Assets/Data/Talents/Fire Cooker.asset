@@ -58,77 +58,8 @@ MonoBehaviour:
       stealthDuration: 0
       aoeRadiusModificationType: 0
       aoeRadius: 0
-    - effectType: 2
-      damageModificationType: 0
-      damageAmount: 0
-      healModificationType: 1
-      healAmount: 5
-      buffDurationModificationType: 0
-      buffDuration: 0
-      buffMultiplierModificationType: 0
-      buffMultiplier: 0
-      debuffModificationType: 0
-      debuffDuration: 0
-      debuffMultiplierModificationType: 0
-      debuffMultiplier: 0
-      stunDurationModificationType: 0
-      stunDuration: 0
-      slowDurationModificationType: 0
-      slowDuration: 0
-      slowPercentageModificationType: 0
-      slowPercentage: 0
-      silenceDurationModificationType: 1
-      silenceDuration: 0
-      knockbackForceModificationType: 0
-      knockbackForce: 0
-      knockupForceModificationType: 0
-      knockupForce: 0
-      rootDurationModificationType: 0
-      rootDuration: 0
-      disarmDurationModificationType: 0
-      disarmDuration: 0
-      shieldAmountModificationType: 0
-      shieldAmount: 0
-      shieldDurationModificationType: 0
-      shieldDuration: 0
-      stealthDurationModificationType: 0
-      stealthDuration: 0
-      aoeRadiusModificationType: 0
-      aoeRadius: 0
-    - effectType: 3
-      damageModificationType: 0
-      damageAmount: 0
-      healModificationType: 0
-      healAmount: 0
-      buffDurationModificationType: 0
-      buffDuration: 0
-      buffMultiplierModificationType: 0
-      buffMultiplier: 0
-      debuffModificationType: 0
-      debuffDuration: 0
-      debuffMultiplierModificationType: 0
-      debuffMultiplier: 0
-      stunDurationModificationType: 0
-      stunDuration: 0
-      slowDurationModificationType: 0
-      slowDuration: 0
-      slowPercentageModificationType: 0
-      slowPercentage: 0
-      silenceDurationModificationType: 0
-      silenceDuration: 0
-      knockbackForceModificationType: 0
-      knockbackForce: 0
-      knockupForceModificationType: 0
-      knockupForce: 0
-      rootDurationModificationType: 0
-      rootDuration: 0
-      disarmDurationModificationType: 0
-      disarmDuration: 0
-      shieldAmountModificationType: 0
-      shieldAmount: 0
-      shieldDurationModificationType: 0
-      shieldDuration: 0
-      stealthDurationModificationType: 0
-      stealthDuration: 0
-      aoeRadiusModificationType: 0
-      aoeRadius: 0
+    talentVfxList:
+    - vfxName: Sparks v2
+      vfxPrefab: {fileID: 2644118671100421680, guid: 0ae9335d64af544449cced2006bf3275, type: 3}
+    - vfxName: Fog
+      vfxPrefab: {fileID: 2644118671100421680, guid: 0ae9335d64af544449cced2006bf3275, type: 3}
